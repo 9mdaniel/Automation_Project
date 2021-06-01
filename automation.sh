@@ -27,9 +27,19 @@ if [[ $servstat == *"active (running)"* ]]; then
   find . -iname '*.log' -print0 | xargs -0 tar -cvf - ./var/log/apache2/* > /tmp/${myname}-httpd-logs-${timestamp}.tar
 fi
 
-
-
 #S3 bucket copy
 aws s3 \
 cp /tmp/${myname}-httpd-logs-${timestamp}.tar \
 s3://${s3_bucket}/${myname}-httpd-logs-${timestamp}.tar
+
+#check if file exists inventory.html
+if [ -f "/var/www/html/inventory.html" ]; 
+	then
+		echo "FILE exists."
+		else
+			
+	
+fi
+
+#run cron job
+@daily root /root/Automation_Project/automation.sh
